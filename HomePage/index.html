@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function ping(ip) {
+        var img = new Image();
+        var start = new Date().getTime();
+        var flag = false;
+        var isCloseWifi = true;
+        var hasFinish = false;
+        img.onload = function() {
+            if ( !hasFinish ) {
+            flag = true;
+            hasFinish = true;
+            img.src = 'X:\\';
+            console.log('Ping ' + ip + ' success. ');
+            }
+        };
+        img.onerror = function() {
+            if ( !hasFinish ) {
+            if ( !isCloseWifi ) {
+                flag = true;
+                img.src = 'X:\\';
+                console.log('Ping ' + ip + ' succeed. ');
+                window.location.href="http://192.168.1.119";
+            } else {
+                console.log('network is not working!');
+            }
+            hasFinish = true;
+            }
+        };
+        setTimeout(function(){
+            isCloseWifi = false;
+            console.log('network is working, start ping...');
+        },2);
+        img.src = 'http://' + ip + '/' + start;
+        var timer = setTimeout(function() {
+            if ( !flag ) {
+            hasFinish = true;
+            img.src = 'X://';
+            flag = false ;
+            console.log('Ping ' + ip + ' fail. ');
+            window.location.href="http://192.168.2.134";
+            }
+        }, 1500);
+        }
+    ping('192.168.1.1');
+    </script>
+</body>
+</html>
+
